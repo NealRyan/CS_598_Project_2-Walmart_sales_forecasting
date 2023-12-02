@@ -252,10 +252,10 @@ for j in range(n_datasets):
     test_data = pd.read_csv("test.csv")
 
     # Copy the 'IsHoliday' column from test_data to test_pred
-    test_pred['IsHoliday'] = test_data['IsHoliday']
+    #test_pred['IsHoliday'] = test_data['IsHoliday']
 
     # Select and reorder the columns in test_pred
-    new_cols = ['Store', 'Dept', 'Date', 'IsHoliday', 'Weekly_Pred']
+    new_cols = ['Store', 'Dept', 'Date', 'Weekly_Pred']
     test_pred = test_pred[new_cols]
 
     # Convert 'Store' and 'Dept' columns to int64 data type
@@ -263,6 +263,9 @@ for j in range(n_datasets):
 
     # Round the 'Weekly_Pred' column to 2 decimal places
     test_pred['Weekly_Pred'] = test_pred['Weekly_Pred'].round(2)
+
+    # Merge to get test entries for Store/Dept combinations that were not in training set
+    test_pred = pd.merge(test_datasets[j], test_pred, how="left", on=["Store", "Dept", "Date"]).fillna(0)
 
     # Save the output to CSV
     file_path = f'mypred.csv'
