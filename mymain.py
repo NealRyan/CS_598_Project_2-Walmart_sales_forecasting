@@ -248,12 +248,6 @@ for j in range(n_datasets):
     # Replace negative predictions with 0
     test_pred.loc[test_pred['Weekly_Pred'] < 0, 'Weekly_Pred'] = 0
 
-    # Load test data from the given file
-    test_data = pd.read_csv("test.csv")
-
-    # Copy the 'IsHoliday' column from test_data to test_pred
-    #test_pred['IsHoliday'] = test_data['IsHoliday']
-
     # Select and reorder the columns in test_pred
     new_cols = ['Store', 'Dept', 'Date', 'Weekly_Pred']
     test_pred = test_pred[new_cols]
